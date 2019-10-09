@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "441727472468",
+    "firebase_url": "https://mywallet-b8f6e.firebaseio.com",
+    "project_id": "mywallet-b8f6e",
+    "storage_bucket": "mywallet-b8f6e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441727472468:android:83b9b7b58f4cd8e86deec1",
+        "android_client_info": {
+          "package_name": "trinity.MyWallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "441727472468-s01dhd9805gnnt0m58dl6a3ghsgoiqke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDGPRbwYv9aBhsgyl7CvoqB-5SsLbW0Bo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "441727472468-s01dhd9805gnnt0m58dl6a3ghsgoiqke.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:id="@+id/linear"
+    android:layout_height="match_parent"
+    android:background="@color/menuPrimary"
+    tools:context="com.lchow.RegistrationActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="50dp"
+        android:background="@color/menuPrimary"
+        android:layout_marginTop="0dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="32sp"
+            android:textColor="#fff"
+            android:text="Welcome to myWallet"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="Manage your finance in easiest possible way!"
+            android:textColor="#fff"
+            android:layout_marginTop="10sp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            >
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Registration"
+                android:textColor="@android:color/white"
+                android:textAppearance="?android:textAppearanceLarge"
+                android:gravity="center"
+                android:background="@color/menuPrimary"
+                />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:hint="Email:"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black"
+                android:background="@drawable/edittext_background"
+                android:inputType="textEmailAddress"
+                android:padding="15dp"
+                android:id="@+id/email_reg"
+                />
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:padding="15dp"
+                android:inputType="textPassword"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/black"
+                android:background="@drawable/edittext_background"
+                android:hint="Password:"
+                android:id="@+id/password_reg"
+                />
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="40dp"
+                android:text="Registration"
+                android:textAllCaps="true"
+                android:textStyle="bold"
+                android:background="@color/menuPink"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/black"
+                android:id="@+id/btn_reg"
+                android:textAppearance="?android:textAppearanceMedium"
+                />
+
+            <TextView
+                android:background="@color/menuPrimary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:id="@+id/signin_here"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:text="Already have account? Sign in here."
+                android:padding="20dp"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
