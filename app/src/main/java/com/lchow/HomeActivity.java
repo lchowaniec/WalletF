@@ -15,6 +15,7 @@ import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -70,7 +71,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         expenseFragment=new ExpenseFragment();
 
         setFragment(dashBoardFragment);
-
+        String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        final TextView mUserEmailView = navigationView.getHeaderView(0).findViewById(R.id.user_email);
+        mUserEmailView.setText(userEmail);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
