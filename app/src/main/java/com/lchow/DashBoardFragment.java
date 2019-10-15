@@ -326,11 +326,13 @@ public class DashBoardFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String type=edtType.getText().toString().trim();
+              //  String type=edtType.getText().toString().trim();
+                String type="INCOME";
+
                 String ammount=edtAmmount.getText().toString().trim();
                 String note=edtNote.getText().toString().trim();
 
-                if (TextUtils.isEmpty(type)){
+              if (TextUtils.isEmpty(type)){
                     edtType.setError("Required Field..");
                     return;
                 }
