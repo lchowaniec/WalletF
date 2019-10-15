@@ -13,6 +13,10 @@
         android:title="Expense"
         android:icon="@drawable/expense"/>
 
+    <item android:id="@+id/scan"
+        android:title="Scan Product"
+        android:icon="@android:drawable/ic_menu_camera"/>
+
 
     <item android:id="@+id/logout"
         android:title="Log out"

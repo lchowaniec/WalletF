@@ -91,6 +91,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         bottomNavigationView.setItemBackgroundResource(R.color.expense_color);
                         return true;
 
+                    case  R.id.scan:
+                        Intent intent = new Intent(getApplicationContext(), ScanBarcodeActivity.class);
+                        HomeActivity.this.startActivity(intent);
+                        return true;
+
+
                         default:
                             return false;
 
@@ -145,6 +151,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.expense:
                 fragment=new ExpenseFragment();
+                break;
+
+            case  R.id.scan:
+                Intent intent = new Intent(getApplicationContext(), ScanBarcodeActivity.class);
+                HomeActivity.this.startActivity(intent);
                 break;
 
             case R.id.logout:
