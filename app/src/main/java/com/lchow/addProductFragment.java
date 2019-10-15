@@ -21,21 +21,24 @@ public class addProductFragment extends Fragment {
     //Text view
 
     private TextView txtBarcodeValue;
-    private Bundle args;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View myview = inflater.inflate(R.layout.fragment_income, container, false);
+        View myview = inflater.inflate(R.layout.product_add, container, false);
 
 
         mAuth = FirebaseAuth.getInstance();
-
-        args = getArguments();
+        Bundle args = getArguments();
+        txtBarcodeValue = myview.findViewById(R.id.txtBarcodeValue);
 
         if (args != null) {
-            txtBarcodeValue.setText(args.getCharSequence("params", "No BARCODE received"));
+            String argStr = args.getString("params", "No Barcode Received");
+            txtBarcodeValue.setText(argStr);
+        }
+           else {
+            txtBarcodeValue.setText("BRAK");
         }
 
 
