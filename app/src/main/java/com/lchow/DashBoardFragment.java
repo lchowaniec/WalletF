@@ -2,13 +2,32 @@ package com.lchow;
 
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.gms.dynamic.SupportFragmentWrapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,10 +50,25 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.lchow.MyWallet.Data;
+import com.github.mikephil.charting.charts.BarChart;
+
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+
+import static android.content.ContentValues.TAG;
+import android.util.Log;
 
 
 /**
@@ -78,6 +112,8 @@ public class DashBoardFragment extends Fragment {
     private FirebaseAuth mAuth;
     private DatabaseReference mIncomeDatabase;
     private DatabaseReference mExpenseDatabase;
+    private String typ;
+    private Float suma_typu;
 
     //Recycler view
 
@@ -85,6 +121,7 @@ public class DashBoardFragment extends Fragment {
     private RecyclerView mRecyclerExpense;
 
 
+    PieChart pieChart;
 
 
 
@@ -93,6 +130,9 @@ public class DashBoardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View myview= inflater.inflate(R.layout.fragment_dash_board, container, false);
+
+
+
 
 
 
@@ -128,6 +168,139 @@ public class DashBoardFragment extends Fragment {
 
         FadOpen= AnimationUtils.loadAnimation(getActivity(),R.anim.fade_open);
         FadeClose=AnimationUtils.loadAnimation(getActivity(),R.anim.fade_close);
+
+        //data Piechart from Firebase
+        ArrayList<PieEntry> yValues = new ArrayList<>();
+
+
+        /*if (getArguments()!=null){
+            float basic_sum= getArguments().getFloat("Basic");
+            float clothes_sum =  getArguments().getFloat("Clothes");
+            float entertainment_sum =  getArguments().getFloat("Entertainment");
+            float travels_sum =  getArguments().getFloat("Travels");
+            float home_sum = getArguments().getFloat("Home") ;
+            if (clothes_sum>0) yValues.add(new PieEntry(clothes_sum,"Clothes"));
+        }
+
+
+         */
+
+
+
+
+        mExpenseDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+
+                float basic_sum = 0;
+                float clothes_sum =0;
+                float entertainment_sum = 0;
+                float travels_sum=0 ;
+                float home_sum=0 ;
+                String type="" ;
+                float price =0;
+
+                for (DataSnapshot mysanapshot:dataSnapshot.getChildren()){
+
+                    Data data=mysanapshot.getValue(Data.class);
+                    type = data.getType();
+                    price = data.getAmount();
+
+                    if(type.toUpperCase().equals("BASIC")){
+                        basic_sum += price;
+                    }else if (type.toUpperCase().equals("CLOTHES")){
+                        clothes_sum += price;
+                    }else if (type.toUpperCase().equals("ENTERTAINMENT")){
+                        entertainment_sum += price;
+                    }else if(type.toUpperCase().equals("TRAVELS")){
+                        travels_sum += price;
+                    }else if(type.toUpperCase().equals("HOME")){
+                        home_sum += price;
+                    };
+
+
+
+
+
+                }
+
+                pieChart = (PieChart) myview.findViewById(R.id.bar_chart);
+                pieChart.setUsePercentValues(true);
+                pieChart.setExtraOffsets(5,10,5,5);
+                pieChart.setDragDecelerationFrictionCoef(0.9f);
+                pieChart.setDrawHoleEnabled(true);
+                pieChart.setHoleColor(Color.WHITE);
+                pieChart.setTransparentCircleRadius(61f);
+               // yValues.add(new PieEntry(3f,"Clothes"));
+               // yValues.add(new PieEntry(55f,"Entertainment"));
+               // yValues.add(new PieEntry(34f,"Basic"));
+               // yValues.add(new PieEntry(55f,"Home"));
+               //
+                if(clothes_sum>0) yValues.add(new PieEntry(clothes_sum,"Clothes"));
+                if (entertainment_sum>0) yValues.add(new PieEntry(entertainment_sum,"Entertainment"));
+                if (basic_sum>0) yValues.add(new PieEntry(basic_sum,"Basic"));
+                if (home_sum>0) yValues.add(new PieEntry(home_sum,"Home"));
+                if (travels_sum>0 )yValues.add(new PieEntry(travels_sum,"Travels"));
+                PieDataSet dataSet = new PieDataSet(yValues,"");
+                dataSet.setSliceSpace(3f);
+                dataSet.setSelectionShift(5f);
+                dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+                PieData data = new PieData(dataSet);
+                data.setValueTextSize(10f);
+
+                pieChart.setData(data);
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+
+
+
+        });
+
+
+       /* //PieChart initialize
+        pieChart = (PieChart) myview.findViewById(R.id.bar_chart);
+        pieChart.setUsePercentValues(true);
+        pieChart.setExtraOffsets(5,10,5,5);
+        pieChart.setDragDecelerationFrictionCoef(0.9f);
+        pieChart.setDrawHoleEnabled(true);
+        pieChart.setHoleColor(Color.WHITE);
+        pieChart.setTransparentCircleRadius(61f);
+
+
+
+
+        yValues.add(new PieEntry(3f,"Clothes"));
+        yValues.add(new PieEntry(55f,"Entertainment"));
+        yValues.add(new PieEntry(34f,"Basic"));
+        yValues.add(new PieEntry(55f,"Home"));
+        yValues.add(new PieEntry(34f,"Travels"));
+
+        PieDataSet dataSet = new PieDataSet(yValues,"nic");
+        dataSet.setSliceSpace(3f);
+        dataSet.setSelectionShift(5f);
+        dataSet.setColors(ColorTemplate.JOYFUL_COLORS);
+        PieData data = new PieData(dataSet);
+        data.setValueTextSize(10f);
+
+        pieChart.setData(data);
+        */
+
+
+
+
+
+
+
+
+
 
 
         fab_main_btn.setOnClickListener(new View.OnClickListener() {
@@ -167,6 +340,8 @@ public class DashBoardFragment extends Fragment {
         });
 
         //Calculate total income..
+
+
 
         mIncomeDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -375,6 +550,7 @@ public class DashBoardFragment extends Fragment {
 
         dialog.show();
     }
+
 
     public void expenseDataInsert(){
 

@@ -17,9 +17,13 @@
         android:title="Scan Product"
         android:icon="@android:drawable/ic_menu_camera"/>
 
+    <item android:id="@+id/analytics"
+        android:title="Analytics"
+        android:icon="@android:drawable/ic_menu_search"/>
 
     <item android:id="@+id/logout"
         android:title="Log out"
         android:icon="@drawable/logout"/>
+
 
 </menu>
