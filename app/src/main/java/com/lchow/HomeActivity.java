@@ -118,6 +118,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         bottomNavigationView.setItemBackgroundResource(R.color.menuPrimary);
                         return true;
 
+                    case  R.id.scan:
+                        Intent intent = new Intent(getApplicationContext(), ScanBarcodeActivity.class);
+                        HomeActivity.this.startActivity(intent);
+                        return true;
+
+
                         default:
                             return false;
 
@@ -176,6 +182,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.analytics:
                 fragment=new AnalyticsFragment();
+                break;
+
+            case  R.id.scan:
+                Intent intent = new Intent(getApplicationContext(), ScanBarcodeActivity.class);
+                HomeActivity.this.startActivity(intent);
                 break;
 
             case R.id.logout:

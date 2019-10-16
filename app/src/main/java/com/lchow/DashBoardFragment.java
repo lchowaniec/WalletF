@@ -33,8 +33,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -555,6 +558,8 @@ public class DashBoardFragment extends Fragment {
         LayoutInflater inflater=LayoutInflater.from(getActivity());
         View myview=inflater.inflate(R.layout.custom_layout_for_insertdata,null);
         mydialog.setView(myview);
+        LinearLayout categoryLinear = myview.findViewById(R.id.categoryView);
+        categoryLinear.setVisibility(View.VISIBLE);
 
        final AlertDialog dialog=mydialog.create();
 
@@ -564,6 +569,14 @@ public class DashBoardFragment extends Fragment {
         final EditText type=myview.findViewById(R.id.type_edt);
         final EditText note=myview.findViewById(R.id.note_edt);
 
+
+        final Spinner spinner =  myview.findViewById(R.id.expense_spinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity() ,R.array.categories_items, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
+        spinner.setAdapter(adapter);
+
+
         Button btnSave=myview.findViewById(R.id.btnSave);
         Button btnCansel=myview.findViewById(R.id.btnCancel);
 
@@ -572,8 +585,9 @@ public class DashBoardFragment extends Fragment {
             public void onClick(View view) {
 
                 String tmAmmount=ammount.getText().toString().trim();
-                String tmtype=type.getText().toString().trim();
+//                String tmtype=type.getText().toString().trim();
                 String tmnote=note.getText().toString().trim();
+                String tmspinner=spinner.getSelectedItem().toString();
 
                 if (TextUtils.isEmpty(tmAmmount)){
                     ammount.setError("Required Field..");
@@ -582,11 +596,11 @@ public class DashBoardFragment extends Fragment {
 
                 int inamount=Integer.parseInt(tmAmmount);
 
-                if (TextUtils.isEmpty(tmtype)){
+                /* if (TextUtils.isEmpty(tmtype)){
                     type.setError("Required Field..");
                     return;
                 }
-
+            */
                 if (TextUtils.isEmpty(tmnote)){
                     note.setError("Required Field..");
                     return;
@@ -596,7 +610,7 @@ public class DashBoardFragment extends Fragment {
                 String id=mExpenseDatabase.push().getKey();
                 String mDate=DateFormat.getDateInstance().format(new Date());
 
-                Data data=new Data(inamount,tmtype,tmnote,id,mDate);
+                Data data=new Data(inamount,tmspinner,tmnote,id,mDate);
                 mExpenseDatabase.child(id).setValue(data);
                 Toast.makeText(getActivity(),"Data added",Toast.LENGTH_SHORT).show();
 
