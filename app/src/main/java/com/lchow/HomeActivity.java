@@ -24,6 +24,7 @@ import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -93,6 +94,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         analyticsFragment=new AnalyticsFragment();
 
         setFragment(dashBoardFragment);
+
+        String userEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        final TextView mUserEmailView = navigationView.getHeaderView(0).findViewById(R.id.user_email);
+        mUserEmailView.setText(userEmail);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -169,19 +174,25 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         switch (itemId){
             case R.id.dashboard:
                 fragment=new DashBoardFragment();
+                bottomNavigationView.setItemBackgroundResource(R.color.dasboard_color);
                 break;
 
             case R.id.income:
 
                 fragment=new IncomeFragment();
+                bottomNavigationView.setItemBackgroundResource(R.color.income_coloer);
+
 
                 break;
 
             case R.id.expense:
                 fragment=new ExpenseFragment();
+                bottomNavigationView.setItemBackgroundResource(R.color.expense_color);
                 break;
             case R.id.analytics:
                 fragment=new AnalyticsFragment();
+                bottomNavigationView.setItemBackgroundResource(R.color.menuPrimary);
+
                 break;
 
             case  R.id.scan:

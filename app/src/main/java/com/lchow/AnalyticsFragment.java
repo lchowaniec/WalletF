@@ -4,7 +4,9 @@ package com.lchow;
 import android.app.AlertDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -103,6 +105,8 @@ public class AnalyticsFragment extends Fragment {
         ArrayList<Entry> xValues = new ArrayList<>();
 
 
+
+
         lineChart = (LineChart) myview.findViewById(R.id.bar_chart2);
         lineChart.setTouchEnabled(true);
         lineChart.setPinchZoom(true);
@@ -112,8 +116,14 @@ public class AnalyticsFragment extends Fragment {
         lineChart.setMaxHighlightDistance(300);
         YAxis left = lineChart.getAxisLeft();
         left.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
-        left.setAxisMaxValue(10f);
         left.setAxisMinValue(0f);
+        myview.dispatchTouchEvent(MotionEvent.obtain(
+                SystemClock.uptimeMillis(),SystemClock.uptimeMillis(),
+                MotionEvent.ACTION_DOWN,700,700,0)
+
+        );
+
+
 
 
 
@@ -137,7 +147,8 @@ public class AnalyticsFragment extends Fragment {
                     Data data = mysanapshot.getValue(Data.class);
                     x = x+1;
                     price = data.getAmount();
-                        yValues.add(new Entry(price,x));
+                        yValues.add(new Entry(x,price));
+
 
 
                     }
@@ -154,6 +165,7 @@ public class AnalyticsFragment extends Fragment {
                 // yValues.add(new PieEntry(34f,"Basic"));
                 // yValues.add(new PieEntry(55f,"Home"));
                 //
+
 
                 LineDataSet dataSet = new LineDataSet(yValues,"");
                 //dataSet.setSliceSpace(3f);

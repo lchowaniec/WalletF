@@ -237,7 +237,7 @@ public class DashBoardFragment extends Fragment {
                // yValues.add(new PieEntry(55f,"Entertainment"));
                // yValues.add(new PieEntry(34f,"Basic"));
                // yValues.add(new PieEntry(55f,"Home"));
-               //
+                ArrayList<PieEntry> yValues = new ArrayList<>();
                 if(clothes_sum>0) yValues.add(new PieEntry(clothes_sum,"Clothes"));
                 if (entertainment_sum>0) yValues.add(new PieEntry(entertainment_sum,"Entertainment"));
                 if (basic_sum>0) yValues.add(new PieEntry(basic_sum,"Basic"));
@@ -501,14 +501,10 @@ public class DashBoardFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String type=edtType.getText().toString().trim();
                 String ammount=edtAmmount.getText().toString().trim();
                 String note=edtNote.getText().toString().trim();
 
-                if (TextUtils.isEmpty(type)){
-                    edtType.setError("Required Field..");
-                    return;
-                }
+
 
                 if (TextUtils.isEmpty(ammount)){
                     edtAmmount.setError("Required Field..");
@@ -526,7 +522,7 @@ public class DashBoardFragment extends Fragment {
 
                 String mDate=DateFormat.getDateInstance().format(new Date());
 
-                Data data=new Data(ourammontint,type,note,id,mDate);
+                Data data=new Data(ourammontint,"income",note,id,mDate);
 
                 mIncomeDatabase.child(id).setValue(data);
 

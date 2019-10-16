@@ -17,8 +17,17 @@
     </androidx.cardview.widget.CardView>
 
     <com.github.mikephil.charting.charts.LineChart
+        android:layout_marginTop="100px"
         android:id="@+id/bar_chart2"
         android:layout_width="match_parent"
-        android:layout_height="800px"/>
+        android:layout_height="800px">
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button"
+            android:visibility="invisible" />
+    </com.github.mikephil.charting.charts.LineChart>
 
 </LinearLayout>
