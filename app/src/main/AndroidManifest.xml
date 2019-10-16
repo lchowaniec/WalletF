@@ -21,7 +21,7 @@
         <activity android:name="com.lchow.ResetActivity" />
         <activity android:name="com.lchow.HomeActivity"></activity>
 
-        <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
+
 
     </application>
 
